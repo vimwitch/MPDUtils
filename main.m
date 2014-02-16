@@ -48,7 +48,8 @@ int main(int argc, const char * argv[])
         for(int x = 0; x < argc; x++){
             if(strnicmp(argv[x], "-a")){
                 //add the file
-                mpd_send_add(connection, argv[++x]);
+				NSLog(@"MPDUtils %s", argv[++x]);
+                mpd_send_add(connection, argv[x]);
             }
             else if(strnicmp(argv[x], "-s")){
 				//search for the name
@@ -130,7 +131,7 @@ void print_song_list(struct mpd_song_list *list, enum OutputFormat format){
 		path = mpd_song_get_uri(list->songs[x]);
 		name = mpd_song_get_tag(list->songs[x], MPD_TAG_TITLE, 0);
 		if(format == OUTPUT_FORMAT_DEFAULT)
-			printf("%s|%s\n", path, name);
+			printf("%s|%s|%s\n", path, name, mpd_song_get_tag(list->songs[x], MPD_TAG_ALBUM_ARTIST, 0));
 		else if(format == OUTPUT_FORMAT_NAME)
 			printf("%s\n", name);
 		else if(format == OUTPUT_FORMAT_URI)
