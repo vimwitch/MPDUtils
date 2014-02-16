@@ -16,3 +16,9 @@
 *.exe
 *.out
 *.app
+
+# ViM
+
+*.swp
+*.swo
+
