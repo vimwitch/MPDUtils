@@ -16,7 +16,7 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $artistList) as $line){
 	if(strlen($line) == 0){
 		continue; //skip blank lines
 	}
-	$final = htmlspecialchars($line, ENT_QUOTES | ENT_NOQUOTES);
+	$final = htmlspecialchars($line, ENT_QUOTES);
     echo '<item uid="'.$final.'" arg="'.$final.'">
     <title>Play songs by '.$final.'</title>
   	</item>';
@@ -29,11 +29,10 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $songList) as $line){
 	if(strlen($line) == 0){
 		continue; //skip blank lines
 	}
-	$uri = substr($line, 0, strpos($line, "|"));
-	
 	$finalFixed = htmlspecialchars($line, ENT_QUOTES);
 	$pipePos1 = strpos($finalFixed, "|");
 	$pipePos2 = strpos($finalFixed, "|", $pipePos1+1);
+	$uri = substr($finalFixed, 0, $pipePos1);
 	$name = substr($finalFixed, $pipePos1+1, $pipePos2-$pipePos1-1);
 	$artist = substr($finalFixed, $pipePos2+1);
 	
@@ -43,6 +42,8 @@ foreach(preg_split("/((\r?\n)|(\r\n?))/", $songList) as $line){
 	<icon>icon.png</icon>
   	</item>';
 	$resultsFound = 1;
+	if($count > 20)
+		break;
 	$count++;
 }
 
